@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: IncShiftMate-final/Backend/pom.xml
-          key: ${{ runner.os }}-m2-${{ hashFiles('IncShiftMate-final/Backend/pom.xml') }}
+          key: ${{ runner.os }}-IncShiftMate-final/Backend/pom.xml
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
