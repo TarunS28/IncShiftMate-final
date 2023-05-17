@@ -42,7 +42,7 @@ steps:
     displayName: Analyze with preZero
     inputs:
      script: |
-      $(Agent.HomeDirectory)\sl.exe analyze --wait --app ShiftLeftJavaAzWin --tag branch=$(System.DefaultWorkingDirectory) --java target/hello-shiftleft-0.0.1.jar
+      $(Agent.HomeDirectory)\sl.exe analyze --wait --app TarunS28.IncShiftMate-final --tag branch=$(System.DefaultWorkingDirectory) 
      workingDirectory: '$(System.DefaultWorkingDirectory)'
     env:
       SHIFTLEFT_ACCESS_TOKEN: $(SHIFTLEFT_ACCESS_TOKEN)
