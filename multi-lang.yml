@@ -45,6 +45,6 @@ steps:
       $(Agent.HomeDirectory)\sl.exe analyze --wait --app ShiftLeftJavaAzWin --tag branch=$(System.DefaultWorkingDirectory) --java target/hello-shiftleft-0.0.1.jar
      workingDirectory: '$(System.DefaultWorkingDirectory)'
     env:
-      SHIFTLEFT_ACCESS_TOKEN: $(shiftleft-token)
+      SHIFTLEFT_ACCESS_TOKEN: $(SHIFTLEFT_ACCESS_TOKEN)
        shiftleft auth login --apiKey API_token
        shiftleft analyze --path $(System.DefaultWorkingDirectory)
