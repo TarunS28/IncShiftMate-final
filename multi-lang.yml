@@ -1,0 +1,56 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - README.md
+
+pr:
+  branches:
+    include:
+      - '*'
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+  - task: PowerShell@2
+    displayName: Download Qwiet cli
+    inputs:
+     targetType: 'inline'
+     script: |
+      Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile $(Agent.HomeDirectory)\sl.zip
+      Expand-Archive -Path $(Agent.HomeDirectory)\sl.zip -DestinationPath $(Agent.HomeDirectory) -Force\
+  - task: JavaToolInstaller@0
+    inputs:
+     versionSpec: '8'
+     jdkArchitectureOption: 'x64'
+     jdkSourceOption: 'PreInstalled'
+
+  - task: Maven@3
+    inputs:
+     mavenPomFile: 'pom.xml'
+     mavenOptions: '-Xmx3072m'
+     javaHomeOption: 'JDKVersion'
+     jdkVersionOption: '1.8'
+     jdkArchitectureOption: 'x64'
+     publishJUnitResults: false
+     goals: 'package'
+
+  - task: CmdLine@2
+    displayName: Analyze with preZero
+    inputs:
+     script: |
+      $(Agent.HomeDirectory)\sl.exe analyze --app ShiftLeftJavaAzWin --tag branch=$(Build.SourceBranchName) --java target/hello-shiftleft-0.0.1.jar
+     workingDirectory: '$(Build.SourcesDirectory)'
+    env:
+      SHIFTLEFT_ACCESS_TOKEN: $(SHIFTLEFT_ACCESS_TOKEN)
+
+#    - task: ShiftLeftScan@1
+#    inputs:
+#      organization: 'your-shiftleft-organization'
+#      project: 'your-shiftleft-project'
+#      repository: 'your-azure-repo'
+#     scanType: 'full'
+#      failOnError: true
