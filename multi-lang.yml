@@ -45,7 +45,7 @@ steps:
       $(Agent.HomeDirectory)\sl.exe analyze --app ShiftLeftJavaAzWin --tag branch=$(Build.SourceBranchName) --java target/hello-shiftleft-0.0.1.jar
      workingDirectory: '$(Build.SourcesDirectory)'
     env:
-      SHIFTLEFT_ACCESS_TOKEN: $(SHIFTLEFT_ACCESS_TOKEN)
+      SHIFTLEFT_ACCESS_TOKEN: $(shiftleft_access_token)
 
 #    - task: ShiftLeftScan@1
 #    inputs:
