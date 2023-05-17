@@ -18,7 +18,7 @@ pool:
 steps:
   
   - task: PowerShell@2 
-    displayName: Download Qwiet cli
+    displayName: Download Shiftleft cli
     inputs:
       targetType: 'inline'
       script: |
@@ -28,7 +28,7 @@ steps:
       warningPreference: 'continue'
       informationPreference: 'continue'
       pwsh: true
-      
+     
   - task: JavaToolInstaller@0
     inputs:
      versionSpec: '8'
@@ -39,15 +39,9 @@ steps:
     displayName: Analyze with preZero
     inputs:
      script: |
-      $(Agent.HomeDirectory)\sl.exe analyze --app ShiftLeftJavaAzWin --tag branch=$(Build.SourceBranchName) --java target/hello-shiftleft-0.0.1.jar
+      $(Agent.HomeDirectory)\sl.exe analyze --wait --app ShiftLeftJavaAzWin --tag branch=$(System.DefaultWorkingDirectory) --java target/hello-shiftleft-0.0.1.jar
      workingDirectory: '$(System.DefaultWorkingDirectory)'
     env:
       SHIFTLEFT_ACCESS_TOKEN: $(shiftleft_access_token)
-
-#    - task: ShiftLeftScan@1
-#    inputs:
-#      organization: 'your-shiftleft-organization'
-#      project: 'your-shiftleft-project'
-#      repository: 'your-azure-repo'
-#     scanType: 'full'
-#      failOnError: true
+       shiftleft auth login --apiKey API_token
+       shiftleft analyze --path $(System.DefaultWorkingDirectory)
