@@ -18,6 +18,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: IncShiftMate-final/Backend/pom.xml
+          key: ${{ runner.os }}-IncShiftMate-final/Backend/pom.xml
+          restore-keys: ${{ runner.os }}-m2
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
