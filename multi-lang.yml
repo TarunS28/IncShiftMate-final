@@ -15,6 +15,9 @@ pr:
 pool:
   vmImage: 'windows-latest'
 
+variables:
+- group: shiftleft-token
+
 steps:
   
   - task: PowerShell@2 
@@ -42,6 +45,6 @@ steps:
       $(Agent.HomeDirectory)\sl.exe analyze --wait --app ShiftLeftJavaAzWin --tag branch=$(System.DefaultWorkingDirectory) --java target/hello-shiftleft-0.0.1.jar
      workingDirectory: '$(System.DefaultWorkingDirectory)'
     env:
-      SHIFTLEFT_ACCESS_TOKEN: $(shiftleft_access_token)
+      SHIFTLEFT_ACCESS_TOKEN: $(Shiftleft_access_token)
        shiftleft auth login --apiKey API_token
        shiftleft analyze --path $(System.DefaultWorkingDirectory)
