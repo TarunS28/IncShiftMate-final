@@ -15,13 +15,19 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-  - task: PowerShell@2
+  
+  - task: PowerShell@2 
     displayName: Download Qwiet cli
     inputs:
-     targetType: 'inline'
-     script: |
-      Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile $(Agent.HomeDirectory)\sl.zip
-      Expand-Archive -Path $(Agent.HomeDirectory)\sl.zip -DestinationPath $(Agent.HomeDirectory) -Force\
+      targetType: 'inline'
+      script: |
+        Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile $(Agent.HomeDirectory)\sl.zip
+        Expand-Archive -Path $(Agent.HomeDirectory)\sl.zip -DestinationPath $(Agent.HomeDirectory) -Force\
+      errorActionPreference: 'continue'
+      warningPreference: 'continue'
+      informationPreference: 'continue'
+      pwsh: true
+      
   - task: JavaToolInstaller@0
     inputs:
      versionSpec: '8'
