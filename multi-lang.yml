@@ -5,6 +5,7 @@ trigger:
   paths:
     exclude:
       - README.md
+      - pom.xml
 
 pr:
   branches:
@@ -33,16 +34,6 @@ steps:
      versionSpec: '8'
      jdkArchitectureOption: 'x64'
      jdkSourceOption: 'PreInstalled'
-
-  - task: Maven@3
-    inputs:
-     mavenPomFile: '$(System.DefaultWorkingDirectory)/Backend/pom.xml'
-     mavenOptions: '-Xmx3072m'
-     javaHomeOption: 'JDKVersion'
-     jdkVersionOption: '1.8'
-     jdkArchitectureOption: 'x64'
-     publishJUnitResults: false
-     goals: 'package'
 
   - task: CmdLine@2
     displayName: Analyze with preZero
